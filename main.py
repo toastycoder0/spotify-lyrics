@@ -29,7 +29,7 @@ else:
 
 
 @app.get(
-    '/lyrics',
+    '/api/lyrics',
     response_model=LyricsResponse,
     summary="Fetch Lyrics and Track Info",
     description=(
