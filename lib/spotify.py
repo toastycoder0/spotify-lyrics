@@ -5,12 +5,17 @@ import requests
 
 def get_spotify_access_token() -> str | None:
     """
-    Get the Spotify access token using a provided refresh token.
+    Retrieves a new Spotify access token using the refresh token.
 
-    This function makes a request to the Spotify API to obtain a new access token.
+    This function makes a request to the Spotify API to obtain a new access token. 
+    The client credentials and refresh token are loaded from environment variables.
 
     Returns:
-        str or None: If the request is successful, returns the `access_token`. If there is an error, returns None.
+        str: The new Spotify access token if the request is successful.
+        None: Returns None if the client credentials are missing, the request fails, or an exception occurs.
+
+    Raises:
+        None: Errors are handled internally and logged using print statements.
     """
     client_id = os.getenv('SPOTIFY_CLIENT_ID')
     client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
@@ -53,14 +58,19 @@ def get_spotify_access_token() -> str | None:
 
 def get_spotify_lyrics_token() -> str | None:
     """
-    Get the Spotify lyrics token using a sp_dc cookie.
+    Retrieves a Spotify lyrics access token using the `sp_dc` cookie.
 
-    This function makes a request to Spotify to obtain a new access token.
+    This function sends a request to Spotify's web player endpoint to obtain an access token 
+    specifically for fetching lyrics. The `sp_dc` cookie is required and is loaded from the 
+    environment variables.
 
     Returns:
-        str or None: If the request is successful, returns the `access_token`. If there is an error, returns None.
-    """
+        str: The Spotify lyrics access token if the request is successful.
+        None: Returns None if the `sp_dc` cookie is missing, the request fails, or an exception occurs.
 
+    Raises:
+        None: Errors are handled internally and logged using print statements.
+    """
     sp_dc = os.getenv('SPOTIFY_SP_DC')
 
     headers = {
@@ -92,17 +102,31 @@ def get_spotify_lyrics_token() -> str | None:
 
 def get_spotify_track_info(access_token: str, song_id: str) -> dict:
     """
-    Get the Spotify track information for a given song ID.
+    Retrieves detailed information about a specific Spotify track.
 
-    This function makes a request to the Spotify API to retrieve the track information for a given song ID.
-    It also includes the access token in the request headers.
+    This function fetches information about a track from the Spotify API, including details about 
+    the track's name, artists, album, and a preview URL (if available).
 
-    Args:
-        access_token (str): The access token to use for the request.
-        song_id (str): The ID of the song to retrieve information for.
+    Parameters:
+        access_token (str): The Spotify access token used for authentication.
+        song_id (str): The ID of the Spotify track to retrieve information for.
 
     Returns:
-        dict or None: The response from the Spotify API. If the request is successful, returns a dictionary with the track information. If there is an error, returns None.
+        dict: A dictionary containing the following keys:
+            - `name` (str): The name of the track.
+            - `external_url` (str): The Spotify URL for the track.
+            - `preview_url` (str or None): The URL for a 30-second preview of the track (if available).
+            - `artists` (list): A list of dictionaries, where each dictionary contains:
+                - `name` (str): The name of the artist.
+                - `external_url` (str): The Spotify URL for the artist.
+            - `album` (dict): A dictionary containing:
+                - `name` (str): The name of the album.
+                - `external_url` (str): The Spotify URL for the album.
+                - `image` (dict): The album's cover image with keys `url`, `width`, and `height`.
+        None: Returns None if the request fails or an exception occurs.
+
+    Raises:
+        None: Errors are handled internally and logged using print statements.
     """
     headers = {
         'Authorization': f'Bearer {access_token}'
