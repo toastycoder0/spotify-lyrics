@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
+from pydantic import BaseModel
+from typing import List, Optional
 from lib.url import validate_spotify_url, extract_spotify_track_id_from_url
 from lib.spotify import get_spotify_access_token, get_spotify_track_info, get_spotify_lyrics_token, get_spotify_lyrics
 import uvicorn
@@ -13,8 +15,50 @@ app = FastAPI(
 )
 
 
+class Artist(BaseModel):
+    name: str
+    external_url: str
+
+
+class AlbumImage(BaseModel):
+    url: str
+    width: int
+    height: int
+
+
+class Album(BaseModel):
+    name: str
+    external_url: str
+    image: AlbumImage
+
+
+class TrackInfo(BaseModel):
+    name: str
+    external_url: str
+    preview_url: Optional[str]
+    artists: List[Artist]
+    album: Album
+
+
+class LyricLine(BaseModel):
+    words: str
+    start_time: int
+    end_time: int
+
+
+class Lyrics(BaseModel):
+    has_lipsync: bool
+    lines: List[LyricLine]
+
+
+class LyricsResponse(BaseModel):
+    track_info: TrackInfo
+    lyrics: Optional[Lyrics]
+
+
 @app.get(
     '/lyrics',
+    response_model=LyricsResponse,
     summary="Fetch Lyrics and Track Info",
     description=(
         "This endpoint retrieves the lyrics and metadata of a Spotify track. "
@@ -37,7 +81,7 @@ def get_song_lyrics(
         song_url (str): The Spotify URL of the track. The URL must be valid and include the Spotify track ID.
 
     Returns:
-        dict: A dictionary containing the following keys:
+        LyricsResponse: A detailed response containing:
             - `track_info`: Metadata about the Spotify track, including title, artists, album, and preview URL.
             - `lyrics`: Lyrics data, including whether the lyrics are synchronized and the timestamped lines.
 
