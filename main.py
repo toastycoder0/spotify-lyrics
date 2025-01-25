@@ -7,8 +7,8 @@ import uvicorn
 load_dotenv()
 
 app = FastAPI(
-    title="Spotify Lyrics API",
-    description="An API to fetch Spotify track information and lyrics using a Spotify song URL.",
+    title="Spotify Lyrics",
+    description="Get lyrics and track info for a Spotify track.",
     version="1.0.0"
 )
 
