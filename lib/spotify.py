@@ -7,12 +7,10 @@ def get_spotify_access_token() -> str | None:
     """
     Get the Spotify access token using a provided refresh token.
 
-    This function makes a request to the Spotify API to obtain a new access token and, optionally,
-    a new refresh token using the credentials configured in the environment variables.
+    This function makes a request to the Spotify API to obtain a new access token.
 
     Returns:
-        dict or None: If the request is successful, returns a dictionary with the `access_token` 
-                      and `refresh_token`. If there is an error, returns None.
+        str or None: If the request is successful, returns the `access_token`. If there is an error, returns None.
     """
     client_id = os.getenv('SPOTIFY_CLIENT_ID')
     client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
@@ -42,6 +40,43 @@ def get_spotify_access_token() -> str | None:
         if response.status_code == 200:
             body = response.json()
             access_token = body['access_token']
+            return access_token
+        else:
+            print(response.status_code)
+            return None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+
+def get_spotify_lyrics_token() -> str | None:
+    """
+    Get the Spotify lyrics token using a sp_dc cookie.
+
+    This function makes a request to Spotify to obtain a new access token.
+
+    Returns:
+        str or None: If the request is successful, returns the `access_token`. If there is an error, returns None.
+    """
+
+    sp_dc = os.getenv('SPOTIFY_SP_DC')
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
+        'App-platform': 'WebPlayer',
+        'Content-Type': 'text-/html; charset=UTF-8',
+        'Cookie': f'sp_dc={sp_dc}'
+    }
+
+    try:
+        response = requests.get(
+            'https://open.spotify.com/get_access_token?reason=transport&productType=web_player',
+            headers=headers
+        )
+
+        if response.status_code == 200:
+            body = response.json()
+            access_token = body['accessToken']
             return access_token
         else:
             print(response.status_code)
