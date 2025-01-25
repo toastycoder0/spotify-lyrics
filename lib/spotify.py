@@ -3,7 +3,7 @@ import base64
 import requests
 
 
-def get_spotify_access_token():
+def get_spotify_access_token() -> str | None:
     """
     Get the Spotify access token using a provided refresh token.
 
