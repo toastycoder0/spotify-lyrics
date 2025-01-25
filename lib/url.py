@@ -3,7 +3,7 @@ import re
 regex = r"https://open.spotify.com/track/"
 
 
-def validate_spotify_url(url):
+def validate_spotify_url(url: str) -> bool:
     """
     Validates whether a given URL matches the pattern for a Spotify track URL.
 
@@ -13,12 +13,10 @@ def validate_spotify_url(url):
     Returns:
         bool: True if the URL matches the pattern, otherwise False.
     """
-    if re.match(regex, url):
-        return True
-    return False
+    return bool(re.match(regex, url))
 
 
-def extract_spotify_track_id(url):
+def extract_spotify_track_id(url: str) -> str | None:
     """
     Extracts the track ID from a Spotify track URL.
 
@@ -28,6 +26,8 @@ def extract_spotify_track_id(url):
     Returns:
         str: The track ID if the URL is valid, otherwise None.
     """
-    if "open.spotify.com/track/" in url:
-        return url.split("/track/")[1].split("?")[0]
-    return None
+    try:
+        track_id = url.split("/track/")[1]
+        return track_id.split("?")[0]
+    except IndexError:
+        return None
