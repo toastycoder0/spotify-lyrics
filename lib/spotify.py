@@ -49,3 +49,63 @@ def get_spotify_access_token() -> str | None:
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+
+def get_spotify_track_info(access_token: str, song_id: str) -> dict:
+    """
+    Get the Spotify track information for a given song ID.
+
+    This function makes a request to the Spotify API to retrieve the track information for a given song ID.
+    It also includes the access token in the request headers.
+
+    Args:
+        access_token (str): The access token to use for the request.
+        song_id (str): The ID of the song to retrieve information for.
+
+    Returns:
+        dict: The response from the Spotify API.
+    """
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+
+    try:
+        response = requests.get(
+            f'https://api.spotify.com/v1/tracks/{song_id}',
+            headers=headers
+        )
+
+        if response.status_code == 200:
+            body = response.json()
+
+            artists = []
+
+            for artist in body['artists']:
+                artists.append({
+                    'name': artist['name'],
+                    'external_url': artist['external_urls']['spotify']
+                })
+
+            album_images = body['album']['images']
+            # Sort the album images by width in descending order and take the first one (the largest image)
+            album_image = max(album_images, key=lambda x: x['width'])
+
+            album = {
+                'name': body['album']['name'],
+                'external_url': body['album']['external_urls']['spotify'],
+                'image': album_image
+            }
+
+            return {
+                'name': body['name'],
+                'external_url': body['external_urls']['spotify'],
+                'preview_url': body['preview_url'],
+                'artists': artists,
+                'album': album
+            }
+        else:
+            print(response.status_code)
+            return None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
