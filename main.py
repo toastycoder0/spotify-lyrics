@@ -1,6 +1,9 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from lib.url import validate_spotify_url, extract_spotify_track_id
 import uvicorn
+
+load_dotenv()
 
 app = FastAPI()
 
