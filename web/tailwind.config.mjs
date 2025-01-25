@@ -7,6 +7,8 @@ export default {
         "spotify-purple": "#4100F5",
         "spotify-green": "#CEF56A",
         "spotify-white": "#E9E2FF",
+        "spotify-pure-green": "#1CD760",
+        "spotify-black": "#282828",
       },
       fontFamily: {
         spotifyMixUI: ["SpotifyMixUI", "sans-serif"],
