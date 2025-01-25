@@ -1,9 +1,11 @@
+import uvicorn
+import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.staticfiles import StaticFiles
 from lib.url import validate_spotify_url, extract_spotify_track_id_from_url
 from lib.spotify import get_spotify_access_token, get_spotify_track_info, get_spotify_lyrics_token, get_spotify_lyrics
 from models.lyrics import LyricsResponse
-import uvicorn
 
 load_dotenv()
 
@@ -12,6 +14,12 @@ app = FastAPI(
     description="Get lyrics and track info for a Spotify track.",
     version="1.0.0"
 )
+
+
+web = os.path.join(os.path.dirname(__file__), "./web/dist")
+
+if os.path.exists(web):
+    app.mount("/", StaticFiles(directory=web, html=True), name="Web Page")
 
 
 @app.get(
