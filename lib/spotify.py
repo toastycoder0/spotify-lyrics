@@ -98,7 +98,7 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
         song_id (str): The ID of the song to retrieve information for.
 
     Returns:
-        dict: The response from the Spotify API.
+        dict or None: The response from the Spotify API. If the request is successful, returns a dictionary with the track information. If there is an error, returns None.
     """
     headers = {
         'Authorization': f'Bearer {access_token}'
