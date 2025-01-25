@@ -16,7 +16,7 @@ def validate_spotify_url(url: str) -> bool:
     return bool(re.match(regex, url))
 
 
-def extract_spotify_track_id(url: str) -> str | None:
+def extract_spotify_track_id_from_url(url: str) -> str | None:
     """
     Extracts the track ID from a Spotify track URL.
 
