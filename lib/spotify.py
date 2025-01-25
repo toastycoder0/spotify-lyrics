@@ -3,7 +3,7 @@ import base64
 import requests
 
 
-def get_spotify_token():
+def get_spotify_access_token():
     """
     Get the Spotify access token using a provided refresh token.
 
@@ -42,9 +42,7 @@ def get_spotify_token():
         if response.status_code == 200:
             body = response.json()
             access_token = body['access_token']
-            return {
-                'access_token': access_token,
-            }
+            return access_token
         else:
             print(response.status_code)
             return None
