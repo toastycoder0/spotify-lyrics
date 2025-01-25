@@ -6,11 +6,47 @@ import uvicorn
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(
+    title="Spotify Lyrics API",
+    description="An API to fetch Spotify track information and lyrics using a Spotify song URL.",
+    version="1.0.0"
+)
 
 
-@app.get('/lyrics')
-def get_song_lyrics(song_url: str = Query(..., description='The Spotify song URL', alias='song_url', title='Song URL')):
+@app.get(
+    '/lyrics',
+    summary="Fetch Lyrics and Track Info",
+    description=(
+        "This endpoint retrieves the lyrics and metadata of a Spotify track. "
+        "Provide the Spotify track URL, and the API will return track details along with synchronized lyrics, if available."
+    ),
+    response_description="Returns the track information and lyrics."
+)
+def get_song_lyrics(
+    song_url: str = Query(
+        ...,
+        description="The Spotify URL of the song to retrieve lyrics for.",
+        alias='song_url',
+        title='Song URL'
+    )
+):
+    """
+    Fetches the lyrics and metadata of a Spotify track.
+
+    Args:
+        song_url (str): The Spotify URL of the track. The URL must be valid and include the Spotify track ID.
+
+    Returns:
+        dict: A dictionary containing the following keys:
+            - `track_info`: Metadata about the Spotify track, including title, artists, album, and preview URL.
+            - `lyrics`: Lyrics data, including whether the lyrics are synchronized and the timestamped lines.
+
+    Raises:
+        HTTPException: Raised in the following cases:
+            - **400**: If the URL is invalid or the track ID cannot be extracted.
+            - **401**: If authentication fails while retrieving access tokens.
+            - **404**: If the track metadata or lyrics cannot be fetched.
+    """
     if not validate_spotify_url(song_url):
         raise HTTPException(
             status_code=400,
