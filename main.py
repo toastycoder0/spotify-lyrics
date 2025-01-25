@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from lib.url import validate_spotify_url, extract_spotify_track_id_from_url
-from lib.spotify import get_spotify_access_token, get_spotify_track_info, get_spotify_lyrics_token
+from lib.spotify import get_spotify_access_token, get_spotify_track_info, get_spotify_lyrics_token, get_spotify_lyrics
 import uvicorn
 
 load_dotenv()
@@ -49,8 +49,11 @@ def get_song_lyrics(song_url: str = Query(..., description='The Spotify song URL
             detail='Error: Failed to get the access token for the lyrics'
         )
 
+    lyrics = get_spotify_lyrics(lyrics_token, song_id)
+
     return {
         'track_info': track_info,
+        'lyrics': lyrics
     }
 
 
