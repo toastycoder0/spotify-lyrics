@@ -16,7 +16,7 @@ MANDATORY_ENV_VARS = [ENV_VARS_KEYS[key] for key in ENV_VARS_KEYS]
 for enviroment_variable in MANDATORY_ENV_VARS:
     if enviroment_variable not in os.environ:
         raise EnvironmentError(
-            "Failed because {} is not set.".format(enviroment_variable)
+            f"Failed because {enviroment_variable} is not set."
         )
 
 SPOTIFY_CLIENT_ID = os.getenv(ENV_VARS_KEYS['client_id'])
