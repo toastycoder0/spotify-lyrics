@@ -46,7 +46,7 @@ def get_song_lyrics(song_url: str = Query(..., description='The Spotify song URL
     if not lyrics_token:
         raise HTTPException(
             status_code=401,
-            detail='Error: Failed to get lyrics token'
+            detail='Error: Failed to get the access token for the lyrics'
         )
 
     return {
