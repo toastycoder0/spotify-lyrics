@@ -51,7 +51,6 @@ def get_song_lyrics(song_url: str = Query(..., description='The Spotify song URL
 
     return {
         'track_info': track_info,
-        'lyrics_token': lyrics_token
     }
 
 
