@@ -39,7 +39,9 @@ def get_spotify_access_token() -> str | None:
 
         if response.status_code == 200:
             body = response.json()
+
             access_token = body['access_token']
+
             return access_token
         else:
             print(response.status_code)
@@ -76,7 +78,9 @@ def get_spotify_lyrics_token() -> str | None:
 
         if response.status_code == 200:
             body = response.json()
+
             access_token = body['accessToken']
+
             return access_token
         else:
             print(response.status_code)
@@ -122,6 +126,7 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
                 })
 
             album_images = body['album']['images']
+
             # Sort the album images by width in descending order and take the largest image
             album_image = max(album_images, key=lambda x: x['width'])
 
@@ -137,6 +142,52 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
                 'preview_url': body['preview_url'],
                 'artists': artists,
                 'album': album
+            }
+        else:
+            print(response.status_code)
+            return None
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+
+def get_spotify_lyrics(access_token: str, song_id: str) -> dict:
+    url_params = '?format=json&vocalRemoval=false&market=from_token'
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
+        'App-platform': 'WebPlayer',
+        'Authorization': f'Bearer {access_token}'
+    }
+
+    try:
+        response = requests.get(
+            'https://spclient.wg.spotify.com/color-lyrics/v2/track/' + song_id + url_params,
+            headers=headers
+        )
+
+        if response.status_code == 200 and response.json():
+            body = response.json()
+
+            has_lipsync = body['lyrics']['syncType'] == 'LINE_SYNCED'
+            lyrics_lines = body['lyrics']['lines']
+
+            lines = []
+
+            for line in lyrics_lines:
+                words = line['words']
+                start_time = line['startTimeMs']
+                end_time = line['endTimeMs']
+
+                lines.append({
+                    'words': words,
+                    'start_time': int(start_time),
+                    'end_time': int(end_time)
+                })
+
+            return {
+                'has_lipsync': has_lipsync,
+                'lines': lines
             }
         else:
             print(response.status_code)
