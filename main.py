@@ -9,7 +9,7 @@ load_dotenv()
 app = FastAPI()
 
 
-invalid_url_message = "Invalid URL"
+invalid_url_message = "Error: Invalid URL. Please provide a valid Spotify URL."
 
 
 @app.get("/lyrics")
@@ -23,6 +23,12 @@ def get_song_lyrics(song_url: str = Query(..., description="The Spotify song URL
         raise HTTPException(status_code=400, detail=invalid_url_message)
 
     access_token = get_spotify_access_token()
+
+    if not access_token:
+        raise HTTPException(
+            status_code=401,
+            detail="Error: Failed to get access token"
+        )
 
     return {
         "access_token": access_token,
