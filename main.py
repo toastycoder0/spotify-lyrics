@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from lib.url import validate_spotify_url, extract_spotify_track_id
+from lib.spotify import get_spotify_token
 import uvicorn
 
 load_dotenv()
@@ -21,7 +22,12 @@ def get_song_lyrics(song_url: str = Query(..., description="The Spotify song URL
     if not song_id:
         raise HTTPException(status_code=400, detail=invalid_url_message)
 
-    return {"song_id": song_id}
+    spotify_token = get_spotify_token()
+
+    return {
+        "spotify_token": spotify_token,
+        "song_id": song_id
+    }
 
 
 if __name__ == "__main__":
