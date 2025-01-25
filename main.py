@@ -9,18 +9,21 @@ load_dotenv()
 app = FastAPI()
 
 
-invalid_url_message = "Error: Invalid URL. Please provide a valid Spotify URL."
-
-
 @app.get("/lyrics")
 def get_song_lyrics(song_url: str = Query(..., description="The Spotify song URL", alias="song_url", title="Song URL")):
     if not validate_spotify_url(song_url):
-        raise HTTPException(status_code=400, detail=invalid_url_message)
+        raise HTTPException(
+            status_code=400,
+            detail="Error: Invalid URL. Please provide a valid Spotify URL."
+        )
 
     song_id = extract_spotify_track_id(song_url)
 
     if not song_id:
-        raise HTTPException(status_code=400, detail=invalid_url_message)
+        raise HTTPException(
+            status_code=400,
+            detail="Error: Failed to extract song ID from URL"
+        )
 
     access_token = get_spotify_access_token()
 
