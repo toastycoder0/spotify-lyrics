@@ -1,5 +1,6 @@
 import uvicorn
 import os
+import subprocess
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
@@ -20,6 +21,11 @@ web = os.path.join(os.path.dirname(__file__), "./web/dist")
 
 if os.path.exists(web):
     app.mount("/", StaticFiles(directory=web, html=True), name="Web Page")
+else:
+    subprocess.Popen(
+        ["pnpm", "dev"],
+        cwd=os.path.join(os.path.dirname(__file__), "./web")
+    )
 
 
 @app.get(
