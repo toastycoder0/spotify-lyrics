@@ -152,6 +152,28 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
 
 
 def get_spotify_lyrics(access_token: str, song_id: str) -> dict:
+    """
+    Retrieves synchronized lyrics for a given Spotify track.
+
+    This function makes a request to Spotify's lyrics API to fetch lyrics for a specific song. 
+    The lyrics include synchronization data such as start and end timestamps for each line.
+
+    Parameters:
+        access_token (str): The Spotify access token used for authentication.
+        song_id (str): The ID of the Spotify track for which lyrics are being retrieved.
+
+    Returns:
+        dict: A dictionary containing the following keys:
+            - `has_lipsync` (bool): Indicates whether the lyrics are line-synced.
+            - `lines` (list): A list of dictionaries, where each dictionary contains:
+                - `words` (str): The text of the lyric line.
+                - `start_time` (int): The start timestamp of the lyric line in milliseconds.
+                - `end_time` (int): The end timestamp of the lyric line in milliseconds.
+        None: Returns None if the request fails or an exception occurs.
+
+    Raises:
+        None: Errors are handled internally and logged using print statements.
+    """
     url_params = '?format=json&vocalRemoval=false&market=from_token'
 
     headers = {
