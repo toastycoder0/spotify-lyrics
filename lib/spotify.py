@@ -87,7 +87,7 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
                 })
 
             album_images = body['album']['images']
-            # Sort the album images by width in descending order and take the first one (the largest image)
+            # Sort the album images by width in descending order and take the largest image
             album_image = max(album_images, key=lambda x: x['width'])
 
             album = {
