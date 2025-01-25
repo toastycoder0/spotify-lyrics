@@ -25,4 +25,29 @@
   <body>
     <slot />
   </body>
+
+  <style is:global>
+    *,
+    *:focus-visible,
+    *:focus {
+      outline: none;
+    }
+
+    @font-face {
+      font-family: "SpotifyMixUI";
+      font-weight: 400;
+      src: url("/fonts/SpotifyMixUI.woff2") format("woff2");
+    }
+
+    @font-face {
+      font-family: "SpotifyMixVariable";
+      font-weight: 700;
+      src: url("/fonts/SpotifyMixVariable.woff2") format("woff2");
+    }
+
+    body {
+      font-family: "SpotifyMixUI", sans-serif;
+      overscroll-behavior: none;
+    }
+  </style>
 </html>
