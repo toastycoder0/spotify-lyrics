@@ -1,9 +1,8 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel
-from typing import List, Optional
 from lib.url import validate_spotify_url, extract_spotify_track_id_from_url
 from lib.spotify import get_spotify_access_token, get_spotify_track_info, get_spotify_lyrics_token, get_spotify_lyrics
+from models.lyrics import LyricsResponse
 import uvicorn
 
 load_dotenv()
@@ -13,47 +12,6 @@ app = FastAPI(
     description="Get lyrics and track info for a Spotify track.",
     version="1.0.0"
 )
-
-
-class Artist(BaseModel):
-    name: str
-    external_url: str
-
-
-class AlbumImage(BaseModel):
-    url: str
-    width: int
-    height: int
-
-
-class Album(BaseModel):
-    name: str
-    external_url: str
-    image: AlbumImage
-
-
-class TrackInfo(BaseModel):
-    name: str
-    external_url: str
-    preview_url: Optional[str]
-    artists: List[Artist]
-    album: Album
-
-
-class LyricLine(BaseModel):
-    words: str
-    start_time: int
-    end_time: int
-
-
-class Lyrics(BaseModel):
-    has_lipsync: bool
-    lines: List[LyricLine]
-
-
-class LyricsResponse(BaseModel):
-    track_info: TrackInfo
-    lyrics: Optional[Lyrics]
 
 
 @app.get(
