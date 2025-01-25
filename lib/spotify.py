@@ -1,6 +1,7 @@
 import os
 import base64
 import requests
+from core.config import SPOTIFY_APP_PLATFORM, SPOTIFY_USER_AGENT, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN, SPOTIFY_SP_DC
 
 
 def get_spotify_access_token() -> str | None:
@@ -17,22 +18,15 @@ def get_spotify_access_token() -> str | None:
     Raises:
         None: Errors are handled internally and logged using print statements.
     """
-    client_id = os.getenv('SPOTIFY_CLIENT_ID')
-    client_secret = os.getenv('SPOTIFY_CLIENT_SECRET')
-    refresh_token = os.getenv('SPOTIFY_REFRESH_TOKEN')
-
-    if not client_id or not client_secret:
-        print("Error: Missing Spotify client ID or secret")
-        return None
 
     auth_header = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + base64.b64encode(f'{client_id}:{client_secret}'.encode('utf-8')).decode('utf-8')
+        'Authorization': 'Basic ' + base64.b64encode(f'{SPOTIFY_CLIENT_ID}:{SPOTIFY_CLIENT_SECRET}'.encode('utf-8')).decode('utf-8')
     }
 
     data = {
         'grant_type': 'refresh_token',
-        'refresh_token': refresh_token
+        'refresh_token': SPOTIFY_REFRESH_TOKEN
     }
 
     try:
@@ -71,13 +65,12 @@ def get_spotify_lyrics_token() -> str | None:
     Raises:
         None: Errors are handled internally and logged using print statements.
     """
-    sp_dc = os.getenv('SPOTIFY_SP_DC')
 
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-        'App-platform': 'WebPlayer',
+        'User-Agent': SPOTIFY_USER_AGENT,
+        'App-platform': SPOTIFY_APP_PLATFORM,
         'Content-Type': 'text-/html; charset=UTF-8',
-        'Cookie': f'sp_dc={sp_dc}'
+        'Cookie': f'sp_dc={SPOTIFY_SP_DC}'
     }
 
     try:
@@ -128,6 +121,7 @@ def get_spotify_track_info(access_token: str, song_id: str) -> dict:
     Raises:
         None: Errors are handled internally and logged using print statements.
     """
+
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
@@ -198,11 +192,12 @@ def get_spotify_lyrics(access_token: str, song_id: str) -> dict:
     Raises:
         None: Errors are handled internally and logged using print statements.
     """
+
     url_params = '?format=json&vocalRemoval=false&market=from_token'
 
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
-        'App-platform': 'WebPlayer',
+        'User-Agent': SPOTIFY_USER_AGENT,
+        'App-platform': SPOTIFY_APP_PLATFORM,
         'Authorization': f'Bearer {access_token}'
     }
 
