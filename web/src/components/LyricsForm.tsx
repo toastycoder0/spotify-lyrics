@@ -1,7 +1,6 @@
 import type { FormEvent } from "react";
 import { toast } from "sonner";
-
-const BASE_SPOTIFY_TRACK_URL = "https://open.spotify.com/track/";
+import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
 
 const LyricsForm = () => {
   const onSubmitTrackURL = (e: FormEvent<HTMLFormElement>) => {
@@ -29,7 +28,7 @@ const LyricsForm = () => {
       return toast.error("Failed to extract track ID from URL");
     }
 
-    window.location.href = `/track?q=${encodeURIComponent(url)}`;
+    window.location.href = `/track?q=${trackId}`;
   };
 
   return (
