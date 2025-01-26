@@ -7,7 +7,7 @@ import Logo from "@/components/Logo.astro";
   <div
     class="min-h-screen flex flex-col items-center justify-center gap-10 py-12 px-6 text-white bg-spotify-purple sm:px-6 lg:px-8"
   >
-    <section class="flex items-center mb-6 gap-2.5">
+    <section class="flex items-center gap-2.5">
       <Logo />
       <h2 class="text-3xl text-spotify-green">Spotify Lyrics</h2>
     </section>
@@ -23,15 +23,16 @@ import Logo from "@/components/Logo.astro";
       details along with synchronized lyrics, if available.
     </p>
 
-    <form class="flex flex-col items-center gap-6 w-full">
+    <form id="search-form" class="flex flex-col items-center gap-6 w-full">
       <input
+        name="url"
         type="text"
         placeholder="Enter a valid Spotify URL"
-        class="py-2 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
+        class="py-3 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
       />
 
       <button
-        class="uppercase duration-200 text-spotify-purple bg-spotify-green py-4 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
+        class="uppercase duration-200 text-spotify-purple bg-spotify-green py-3 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
       >
         Get Lyrics
       </button>
