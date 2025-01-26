@@ -5,37 +5,41 @@ import Logo from "@/components/Logo.astro";
 
 <Layout>
   <div
-    class="min-h-screen flex flex-col items-center justify-center gap-10 py-12 px-6 text-white bg-spotify-purple sm:px-6 lg:px-8"
+    class="min-h-screen relative flex py-12 px-6 text-white bg-spotify-purple lg:px-8"
   >
-    <section class="flex items-center gap-2.5">
-      <Logo />
-      <h2 class="text-3xl text-spotify-green">Spotify Lyrics</h2>
-    </section>
-
-    <h1
-      class="font-bold font-spotifyMixVariable text-5xl md:text-7xl xl:text-8xl max-w-5xl text-center"
+    <main
+      class="flex flex-col items-center gap-10 w-full m-auto relative z-[1]"
     >
-      Find the Lyrics to Your Favorite Songs
-    </h1>
+      <section class="flex items-center gap-2.5">
+        <Logo />
+        <h2 class="text-3xl text-spotify-green">Spotify Lyrics</h2>
+      </section>
 
-    <p class="md:text-lg max-w-xl w-full text-center text-[#E9E2FF]">
-      Simply provide the Spotify URL of the track, and we will return the track
-      details along with synchronized lyrics, if available.
-    </p>
-
-    <form id="search-form" class="flex flex-col items-center gap-6 w-full">
-      <input
-        name="url"
-        type="text"
-        placeholder="Enter a valid Spotify URL"
-        class="py-3 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
-      />
-
-      <button
-        class="uppercase duration-200 text-spotify-purple bg-spotify-green py-3 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
+      <h1
+        class="font-bold font-spotifyMixVariable text-5xl md:text-7xl xl:text-8xl max-w-5xl text-center"
       >
-        Get Lyrics
-      </button>
-    </form>
+        Find the Lyrics to Your Favorite Songs
+      </h1>
+
+      <p class="md:text-lg max-w-xl w-full text-center text-[#E9E2FF]">
+        Simply provide the Spotify URL of the track, and we will return the
+        track details along with synchronized lyrics, if available.
+      </p>
+
+      <form id="search-form" class="flex flex-col items-center gap-6 w-full">
+        <input
+          name="url"
+          type="text"
+          placeholder="Enter a valid Spotify URL"
+          class="py-3 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
+        />
+
+        <button
+          class="uppercase duration-200 font-sans font-bold text-spotify-purple bg-spotify-green py-4 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
+        >
+          Get Lyrics
+        </button>
+      </form>
+    </main>
   </div>
 </Layout>
