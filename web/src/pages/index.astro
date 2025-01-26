@@ -42,4 +42,38 @@ import Logo from "@/components/Logo.astro";
       </form>
     </main>
   </div>
+
+  <script is:inline>
+    const searchForm = document.getElementById("search-form");
+
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const BASE_SPOTIFY_TRACK_URL = "https://open.spotify.com/track/";
+
+      const formData = new FormData(e.target);
+
+      const url = formData.get("url")?.trim();
+
+      if (!url) {
+        return alert("The URL cannot be empty.");
+      }
+
+      const urlWithoutParams = url.split("?")[0];
+
+      const isValidUrl = urlWithoutParams.startsWith(BASE_SPOTIFY_TRACK_URL);
+
+      if (!isValidUrl) {
+        return alert("Please enter a valid Spotify URL.");
+      }
+
+      const trackId = urlWithoutParams.split("/").pop();
+
+      if (!trackId) {
+        return alert("Failed to extract track ID from URL.");
+      }
+
+      window.location.href = `/track?q=${encodeURIComponent(url)}`;
+    });
+  </script>
 </Layout>
