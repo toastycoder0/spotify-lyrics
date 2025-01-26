@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
 
 const LyricsForm = () => {
@@ -32,24 +32,28 @@ const LyricsForm = () => {
   };
 
   return (
-    <form
-      onSubmit={onSubmitTrackURL}
-      className="flex flex-col items-center gap-6 w-full"
-    >
-      <input
-        name="url"
-        type="text"
-        placeholder="Enter a valid Spotify URL"
-        className="py-3 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
-      />
-
-      <button
-        type="submit"
-        className="uppercase duration-200 font-sans font-black text-spotify-purple bg-spotify-green py-4 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
+    <>
+      <form
+        onSubmit={onSubmitTrackURL}
+        className="flex flex-col items-center gap-6 w-full"
       >
-        Get Lyrics
-      </button>
-    </form>
+        <input
+          name="url"
+          type="text"
+          placeholder="Enter a valid Spotify URL"
+          className="py-3 px-4 rounded-full w-full max-w-xs text-black duration-200 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-spotify-pure-green"
+        />
+
+        <button
+          type="submit"
+          className="uppercase duration-200 font-sans font-black text-spotify-purple bg-spotify-green py-4 px-8 rounded-full hover:bg-spotify-black hover:text-spotify-green focus-visible:bg-spotify-black focus-visible:text-spotify-green"
+        >
+          Get Lyrics
+        </button>
+      </form>
+
+      <Toaster richColors position="top-right" closeButton />
+    </>
   );
 };
 
