@@ -1,3 +1,7 @@
+---
+import { ToasterWithColors } from "@/components/ToasterWithColors";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -24,6 +28,7 @@
   </head>
   <body>
     <slot />
+    <ToasterWithColors client:load />
   </body>
 
   <style is:global>
