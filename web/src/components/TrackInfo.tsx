@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
 
 interface TrackData {
@@ -206,8 +206,6 @@ const TrackDetails = () => {
           </main>
         </div>
       )}
-
-      <Toaster richColors position="top-right" closeButton />
     </>
   );
 };
