@@ -172,7 +172,10 @@ const TrackDetails = () => {
                   />
                 </svg>
               </a>
-              <button className="bg-white h-14 text-black py-2 px-4 grow rounded-full">
+              <button
+                disabled={!trackData.lyrics}
+                className="bg-white h-14 text-black py-2 px-4 grow rounded-full disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+              >
                 Download .lcr file
               </button>
             </div>
