@@ -150,13 +150,13 @@ const TrackDetails = () => {
             </div>
           </header>
 
-          <main className="p-6 grow bg-red-950 rounded-xl space-y-2 md:p-10 xl:space-y-4">
-            {trackData.lyrics && (
+          <main className="p-6 grow min-h-72 flex flex-col bg-[#333] text-white text-xl rounded-xl gap-2 md:p-10 xl:gap-4">
+            {trackData.lyrics ? (
               <>
                 {trackData.lyrics.lines.map((line, index) => (
                   <p
                     key={index}
-                    className="flex justify-between text-lg items-center text-right gap-6 text-white"
+                    className="flex justify-between items-center text-right gap-6"
                   >
                     <span className="font-bold text-gray-400">
                       {convertMsToSeconds(line.start_time)}
@@ -169,6 +169,11 @@ const TrackDetails = () => {
                   Lyrics provided by Musixmatch
                 </p>
               </>
+            ) : (
+              <p className="xl:text-2xl text-center max-w-96 m-auto">
+                Sorry we couldn't find any lyrics for this track. Please try
+                another one.
+              </p>
             )}
           </main>
         </div>
