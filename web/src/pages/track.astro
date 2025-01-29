@@ -1,0 +1,10 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { TrackDetails } from "@/components/TrackInfo";
+---
+
+<Layout>
+  <div class="min-h-screen flex py-12 px-6 text-white bg-black lg:px-8">
+    <TrackDetails client:load />
+  </div>
+</Layout>
