@@ -1,3 +1,7 @@
+---
+import { ColorToast } from "@/components/ColorToast";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -24,6 +28,7 @@
   </head>
   <body>
     <slot />
+    <ColorToast client:load />
   </body>
 
   <style is:global>
