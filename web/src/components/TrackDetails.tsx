@@ -1,51 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
-
-interface TrackData {
-  url: string;
-  track_info: {
-    name: string;
-    external_url: string;
-    preview_url?: string;
-    artists: {
-      name: string;
-      external_url: string;
-    }[];
-    album: {
-      name: string;
-      external_url: string;
-      image: {
-        url: string;
-        width: number;
-        height: number;
-      };
-    };
-  };
-  lyrics?: {
-    has_lipsync: boolean;
-    lines: {
-      words: string;
-      start_time: number;
-      end_time: number;
-    }[];
-  };
-}
-
-const convertMsToSeconds = (ms: number): string => {
-  const seconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(seconds / 60);
-
-  const secondsWithLeadingZero = seconds % 60;
-
-  return `${minutes}:${
-    secondsWithLeadingZero < 10 ? "0" : ""
-  }${secondsWithLeadingZero}`;
-};
+import { trackSchema, type Track } from "@/validations/track";
+import { convertMsToSeconds } from "@/utils/convertMsToSeconds";
 
 const TrackDetails = () => {
   const [hasError, setHasError] = useState(false);
-  const [trackData, setTrackData] = useState<TrackData | null>(null);
+  const [trackData, setTrackData] = useState<Track | null>(null);
 
   const fetchTrackData = async () => {
     try {
@@ -71,10 +32,17 @@ const TrackDetails = () => {
       }
 
       const json = await data.json();
-      setTrackData({
-        ...json,
-        url: trackUrl,
-      });
+
+      const track = trackSchema.safeParse({ ...json, url: trackUrl });
+
+      if (!track.success) {
+        console.error(track.error);
+        toast.error("Failed to parse track data");
+        setHasError(true);
+        return;
+      }
+
+      setTrackData(track.data);
     } catch (error) {
       toast.error("Failed to fetch track data");
       setHasError(true);
