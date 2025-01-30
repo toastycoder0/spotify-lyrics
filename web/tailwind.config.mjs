@@ -16,6 +16,19 @@ export default {
         spotifyMixUI: ["SpotifyMixUI", "sans-serif"],
         spotifyMixVariable: ["SpotifyMixVariable", "sans-serif"],
       },
+      animation: {
+        matrix: "matrix 1s infinite linear",
+      },
+      keyframes: {
+        matrix: {
+          "0%": {
+            backgroundPosition: "0% 100%, 50% 100%, 100% 100%",
+          },
+          "100%": {
+            backgroundPosition: "0% 0%, 50% 0%, 100% 0%",
+          },
+        },
+      },
     },
   },
   plugins: [],
