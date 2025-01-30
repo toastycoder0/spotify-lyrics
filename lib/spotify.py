@@ -216,7 +216,7 @@ def get_spotify_lyrics(access_token: str, song_id: str) -> dict:
             lines = []
 
             for line in lyrics_lines:
-                words = line['words']
+                words = line['words'] or "♫"
                 start_time = line['startTimeMs']
                 end_time = line['endTimeMs']
 
