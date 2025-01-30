@@ -1,5 +1,6 @@
 import { TrackInfo } from "@/components/TrackInfo";
 import { TrackLyrics } from "@/components/TrackLyrics";
+import { Loading } from "@/sections/Loading";
 import { useTrack } from "@/hooks/useTrack";
 
 const TrackDetails = () => {
@@ -10,7 +11,7 @@ const TrackDetails = () => {
   }
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -20,7 +21,6 @@ const TrackDetails = () => {
         trackUrl={data.url}
         isDisabled={!data.lyrics}
       />
-
       <TrackLyrics lyrics={data.lyrics} />
     </div>
   );
