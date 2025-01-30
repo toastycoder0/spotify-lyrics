@@ -23,21 +23,23 @@ const trackInfoSchema = z.object({
   }),
 });
 
-const lyricsSchema = z.object({
-  has_lipsync: z.boolean(),
-  lines: z.array(
-    z.object({
-      words: NON_EMPTY_STRING,
-      start_time: z.number(),
-      end_time: z.number(),
-    })
-  ),
-});
+const lyricsSchema = z
+  .object({
+    has_lipsync: z.boolean(),
+    lines: z.array(
+      z.object({
+        words: NON_EMPTY_STRING,
+        start_time: z.number(),
+        end_time: z.number(),
+      })
+    ),
+  })
+  .nullable();
 
 export const trackSchema = z.object({
   url: NON_EMPTY_STRING,
   track_info: trackInfoSchema,
-  lyrics: lyricsSchema.nullable(),
+  lyrics: lyricsSchema,
 });
 
 export type TrackInfo = z.infer<typeof trackInfoSchema>;
