@@ -42,6 +42,6 @@ export const trackSchema = z.object({
   lyrics: lyricsSchema,
 });
 
-export type TrackInfo = z.infer<typeof trackInfoSchema>;
-export type Lyrics = z.infer<typeof lyricsSchema>;
-export type Track = z.infer<typeof trackSchema>;
+export type TrackInfoSchema = z.infer<typeof trackInfoSchema>;
+export type TrackLyricsSchema = z.infer<typeof lyricsSchema>;
+export type TrackSchema = z.infer<typeof trackSchema>;
