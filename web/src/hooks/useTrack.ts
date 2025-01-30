@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
-import { trackSchema, type Track } from "@/validations/track";
+import { trackSchema, type TrackSchema } from "@/validations/track";
 import { ERRORS } from "@/constants/error";
 
 const useTrack = () => {
   const [error, seError] = useState("");
-  const [trackData, setTrackData] = useState<Track | null>(null);
+  const [trackData, setTrackData] = useState<TrackSchema | null>(null);
 
   const fetchTrackData = async () => {
     try {
