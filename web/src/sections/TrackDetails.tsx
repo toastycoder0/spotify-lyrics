@@ -1,13 +1,14 @@
 import { TrackInfo } from "@/components/TrackInfo";
 import { TrackLyrics } from "@/components/TrackLyrics";
 import { Loading } from "@/sections/Loading";
+import { Error } from "@/sections/Error";
 import { useTrack } from "@/hooks/useTrack";
 
 const TrackDetails = () => {
   const { data, error } = useTrack();
 
   if (error) {
-    return <div>Error</div>;
+    return <Error error={error} />;
   }
 
   if (!data) {
