@@ -7,9 +7,15 @@ interface TrackDetailsProps {
   info: TrackInfoSchema;
   isDisabled?: boolean;
   trackUrl: string;
+  onDonwload?: () => void;
 }
 
-const TrackInfo: FC<TrackDetailsProps> = ({ info, isDisabled, trackUrl }) => {
+const TrackInfo: FC<TrackDetailsProps> = ({
+  info,
+  isDisabled,
+  trackUrl,
+  onDonwload,
+}) => {
   return (
     <div>
       <header className="bg-spotify-dark p-6 rounded-xl h-fit relative w-full sm:max-w-56 lg:max-w-96">
@@ -61,6 +67,7 @@ const TrackInfo: FC<TrackDetailsProps> = ({ info, isDisabled, trackUrl }) => {
           <SearchIcon />
         </a>
         <button
+          onClick={onDonwload}
           disabled={isDisabled}
           className="bg-white h-14 text-black py-2 px-4 grow rounded-full disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
         >
