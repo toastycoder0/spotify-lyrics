@@ -4,6 +4,13 @@ import { BASE_SPOTIFY_TRACK_URL } from "@/constants/url";
 import { trackSchema, type TrackSchema } from "@/validations/track";
 import { ERRORS, type ErrorWithCode } from "@/constants/error";
 
+const {
+  FAILED_TO_FETCH_TRACK_DATA,
+  FAILED_TO_PARSE_TRACK_DATA,
+  NO_TRACK_ID_FOUND,
+  UNKNOWN,
+} = ERRORS;
+
 const useTrack = () => {
   const [error, seError] = useState<ErrorWithCode | null>(null);
   const [trackData, setTrackData] = useState<TrackSchema | null>(null);
@@ -14,8 +21,8 @@ const useTrack = () => {
       const trackId = url.searchParams.get("q");
 
       if (!trackId) {
-        toast.error(ERRORS.NO_TRACK_ID_FOUND.message);
-        seError(ERRORS.NO_TRACK_ID_FOUND);
+        toast.error(NO_TRACK_ID_FOUND.message);
+        seError(NO_TRACK_ID_FOUND);
         return;
       }
 
@@ -26,8 +33,8 @@ const useTrack = () => {
       );
 
       if (!data.ok) {
-        toast.error(ERRORS.FAILED_TO_FETCH_TRACK_DATA.message);
-        seError(ERRORS.FAILED_TO_FETCH_TRACK_DATA);
+        toast.error(FAILED_TO_FETCH_TRACK_DATA.message);
+        seError(FAILED_TO_FETCH_TRACK_DATA);
         return;
       }
 
@@ -36,15 +43,15 @@ const useTrack = () => {
       const track = trackSchema.safeParse({ ...json, url: trackUrl });
 
       if (!track.success) {
-        toast.error(ERRORS.FAILED_TO_PARSE_TRACK_DATA.message);
-        seError(ERRORS.FAILED_TO_PARSE_TRACK_DATA);
+        toast.error(FAILED_TO_PARSE_TRACK_DATA.message);
+        seError(FAILED_TO_PARSE_TRACK_DATA);
         return;
       }
 
       setTrackData(track.data);
     } catch (error) {
-      toast.error(ERRORS.UNKNOWN.message);
-      seError(ERRORS.UNKNOWN);
+      toast.error(UNKNOWN.message);
+      seError(UNKNOWN);
     }
   };
 
