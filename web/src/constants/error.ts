@@ -16,7 +16,7 @@ export const ERRORS = {
     code: 404,
     message: "Failed to parse track data",
   },
-  UNKNOWN: {
+  UNKNOWN_TRACK_ERROR: {
     code: 500,
     message: "An unknown error occurred",
   },

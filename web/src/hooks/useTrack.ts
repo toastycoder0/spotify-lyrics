@@ -8,7 +8,7 @@ const {
   FAILED_TO_FETCH_TRACK_DATA,
   FAILED_TO_PARSE_TRACK_DATA,
   NO_TRACK_ID_FOUND,
-  UNKNOWN,
+  UNKNOWN_TRACK_ERROR,
 } = ERRORS;
 
 const useTrack = () => {
@@ -50,8 +50,8 @@ const useTrack = () => {
 
       setTrackData(track.data);
     } catch (error) {
-      toast.error(UNKNOWN.message);
-      seError(UNKNOWN);
+      toast.error(UNKNOWN_TRACK_ERROR.message);
+      seError(UNKNOWN_TRACK_ERROR);
     }
   };
 
